@@ -5,8 +5,8 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
-    border: none;
-    outline: none;
+    /*border: none;
+    outline: none;*/
     scroll-behavior: smooth;
     font-family: 'Poppins', sans-serif;
 }
@@ -28,7 +28,7 @@ body {
     font-family: "Poppins", sans-serif;
     color: var(--text-color);
 }
-
+/*
 html::-webkit-scrollbar {
     width: 0.8rem;
 }
@@ -40,53 +40,70 @@ html::-webkit-scrollbar-track {
 html::-webkit-scrollbar-thumb {
     background: var(--main-color);
 }
-
+*/
 .header {
+    /* header at top */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 3rem 9%;
-    background: rgba(0, 0, 0, 0.7);
-    filter: drop-shadow(10px);
-    display: flex;
+    padding: 4rem 15%;
+
+    /* transparent header effect */
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+
+    /* item placement */
+    display: flex; /* flexible container */
+    justify-content: space-between; /* items side-by-side with all available space between */
     align-items: center;
     z-index: 100;
 }
-
-.logo {
-    font-size: 3rem;
-    color: var(--main-color);
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.5s ease;
-}
-
-.logo:hover {
-    transform: scale(1.1);
-}
-
-.navbar a {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    margin-left: 4rem;
-    font-weight: 500;
-    transition: 0.3s ease;
-    border-bottom: 3px solid transparent;
-}
-
-.navbar a:hover,
-.navbar a:active {
-    color: var(--main-color);
-    border-bottom: 3px solid var(--main-color);
-}
-
 #menu-icon {
-    font-size: 3.6rem;
+    font-size: 3.5rem;
     color: var(--main-color);
     display: none;
 }
+.logo {
+    font-size: 3rem;
+    color: var(--text-color);
+    font-weight: 800;
+    cursor: pointer; /* indicates something clickable */
+    transition: 0.3s ease-in-out; /* smooth transition for hover effect */
+    /*text-wrap: nowrap; /* no line break when side gets smaller */
+}
+.logo:hover {
+    transform: scale(1.1);
+}
+span {
+    background: linear-gradient(
+        270deg,
+        #7b4bb7 10%,
+        #aa507c 100%
+    );
 
+    /* put gradient inside text */
+    background-clip: text;
+    color: transparent;
+}
+.navbar a {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-left: 4rem; /* space between items */
+    font-weight: 500;
+    transition: 0.3s ease-in-out;
+
+    /* underline effect */
+    border-bottom: 3px solid transparent;
+}
+.navbar a:hover,
+.navbar a:active {
+    color: var(--main-color);
+
+    /* underline effect */
+    border-bottom: 3px solid var(--main-color);
+}
+/*
 @media (max-width: 995px) {
     #menu-icon {
         display: block;
@@ -123,99 +140,127 @@ html::-webkit-scrollbar-thumb {
         border-bottom: 0.5rem solid var(--main-color);
     }
 }
-
+*/
 
 section {
-    min-height: 100vh;
-    padding: 5rem 9% 5rem;
+    min-height: 100vh; /* cover entire page */
+    padding: 10rem 15%; /* match with header and all other sections */
 }
-
 .home {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8rem;
+    gap: 15rem; /* gap between itmes */
     background: var(--bg-color);
 }
+.home-content {
+    display: flex;
+    flex-direction: column; /* items on top of each other */
 
-.home .home-content h1 {
-    font-size: 6rem;
+    /* right alignment */
+    align-items: flex-end;
+    text-align: right;
+}
+.home-content h1 {
+    font-size: 8rem;
     font-weight: 700;
-    line-height: 1.3;
+    margin-top: 1.5rem;
+    line-height: 1;
 }
-
-span {
-    color: var(--main-color);
-}
-
 .home-content h3 {
+    margin: 1rem 0; /* 1rem top/bottom, 0 sides */
     font-size: 4em;
-    margin-bottom: 1rem;
-    font-weight: 700;
 }
-
-.home-img {
-    border-radius: 50%;
+.home-content p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.8; /* easier readability */
 }
-
 .home-img img {
-    position: relative;
-    width: 32vw;
+    /*position: relative;*/
+    width: 32vw; /* image size 32% of viewport width */
     border-radius: 50%;
     box-shadow: 0 0 25px var(--main-color);
+    transition: 0.4s ease-in-out;
     cursor: pointer;
 }
-
 .home-img img:hover {
     transform: scale(1.01);
     filter: drop-shadow(0 0 25px var(--main-color));
 }
-
-.home-content p {
-    font-size: 1.8rem;
-    font-weight: 500;
-}
-
 .social-links a {
+    /* center multiple icons side-by-side horizontally */
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 4rem;
-    height: 4rem;
+
+    font-size: 3rem;
+    padding: 1rem;
     background: transparent;
-    border: 0.2rem solid var(--main-color);
-    font-size: 2rem;
+    border: 2px solid var(--main-color);
+    font-size: 3rem;
     border-radius: 50%;
     color: var(--main-color);
-    margin: 3rem 1.5rem 3rem 0;
-    transition: 0.3s ease;
+    margin: 3rem 0.5rem;
+    transition: 0.3s ease-in-out;
 }
-
 .social-links a:hover {
-    color: black;
-    transform: scale(1.3)translateY(-5px);
+    color: var(--text-color);
     background: var(--main-color);
+    transform: scale(1.2)translateY(-5px); /* chain transform effects */
     box-shadow: 0 0 25px var(--main-color);
+}
+.btn-group {
+    display: flex;
+    gap: 1.5rem;
 }
 
 .btn {
+    /* default button style */
     display: inline-block;
-    padding: 1rem 2.8rem;
-    background: var(--bg-color);
-    border-radius: 4rem;
-    font-size: 1.6rem;
-    color: var(--main-color);
-    letter-spacing: 0.1rem;
+    padding: 1rem 3rem;
+
+    background-color: var(--main-color);
+    box-shadow: 0 0 25px var(--main-color);
+    border-radius: 3rem;
+    font-size: 1.8rem;
+    color: var(--text-color);
     font-weight: 600;
+
+    border-radius: 2px solid transparent;
     transition: 0.3s ease;
+
     cursor: pointer;
+    text-wrap: nowrap;
+}
+.btn:hover {
+    transform: scale(1.05);
+    /*
+    box-shadow: 0 0 25px var(--main-color),
+                0 0 50px var(--main-color);
+    */
+    filter: drop-shadow(0 0 25px var(--main-color));
+}
+.btn-group a:nth-of-type(2) {
+    /* change second button */
+    background-color: var(--bg-color);
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    box-shadow: 0 0 25px transparent;
+}
+.btn-group a:nth-of-type(2):hover {
+    box-shadow: 0 0 25px var(--main-color);
+    background-color: var(--main-color);
+    color: var(--text-color);
 }
 
-.btn:hover {
-    transform: scale(1.03);
-    background-color: var(--main-color);
-    color: black;
-    box-shadow: 0 0 25px var(--main-color);
+/*
+span {
+    color: var(--main-color);
+}
+
+.home-img {
+    border-radius: 50%;
 }
 
 .typewriter {
@@ -280,3 +325,4 @@ span {
         width: calc(100% + 8px);
     }
 }
+*/
