@@ -28,19 +28,19 @@ body {
     font-family: "Poppins", sans-serif;
     color: var(--text-color);
 }
-/*
-html::-webkit-scrollbar {
+
+::-webkit-scrollbar {
     width: 0.8rem;
 }
 
-html::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: var(--bg-color);
 }
 
-html::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: var(--main-color);
 }
-*/
+
 .header {
     /* header at top */
     position: fixed;
@@ -162,14 +162,14 @@ section {
     text-align: right;
 }
 .home-content h1 {
-    font-size: 8rem;
+    font-size: 5rem;
     font-weight: 700;
     margin-top: 1.5rem;
     line-height: 1;
 }
 .home-content h3 {
     margin: 1rem 0; /* 1rem top/bottom, 0 sides */
-    font-size: 4em;
+    font-size: 3em;
 }
 .home-content p {
     font-size: 1.5rem;
@@ -252,6 +252,73 @@ section {
     box-shadow: 0 0 25px var(--main-color);
     background-color: var(--main-color);
     color: var(--text-color);
+}
+
+.heading {
+    text-align: left;
+    font-size: 7rem;
+    margin: 5rem 0;
+}
+
+.contact {
+    background-color: var(--bg-color);
+}
+.contact h2 {
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+.contact form {
+    display: flex;
+    align-items: center;
+
+    /* side-by-side input groups */
+    justify-content: center;
+    gap: 3rem;
+    margin: 5rem 0;
+
+    text-align: center;
+}
+.contact form .input-box input,
+.contact form textarea {
+    width: 100%;
+    padding: 2.5rem;
+    font-size: 1.8rem;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border-radius: 2rem;
+    border: 2px solid var(--main-color);
+    margin: 1.5rem 0;
+    resize: none; /* for textarea */
+}
+
+.footer {
+    background-color: var(--second-bg-color);
+    padding: 50px 0;
+}
+.footer .social-links {
+    text-align: center;
+}
+.footer ul {
+    text-align: center;
+    font-size: 1.8rem;
+}
+.footer ul li {
+    display: inline-block; /* items stay side-by-side */
+    margin-left: 20px;
+}
+.footer ul li a {
+    color: var(--text-color);
+    border-bottom: 3px solid transparent;
+    transition: 0.3s ease-in-out;
+}
+.footer ul li a:hover {
+    color: var(--main-color);
+    border-bottom: 3px solid var(--main-color);
+}
+.footer .copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 16px;
 }
 
 /*
