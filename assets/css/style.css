@@ -209,6 +209,9 @@ section {
     font-size: 10em;
     z-index: 1;
 }
+#mountain_front {
+    z-index: 2;
+}
 
 .aboutme {
     display: flex;
