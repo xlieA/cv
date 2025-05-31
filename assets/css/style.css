@@ -143,16 +143,16 @@ span {
     .gradient-btn {
         display: none;
     }
-    .home {
+    .aboutme {
         flex-direction: column-reverse; /* switch order of divs */
         margin: 5rem 0;
         gap: 5rem;
     }
-    .home .home-content {
+    .aboutme .aboutme-content {
         align-items: center;
         text-align: center;
     }
-    .home .home-img img {
+    .aboutme .aboutme-img img {
         width: 56vw;
     }
     .contact form {
@@ -165,13 +165,32 @@ section {
     padding: 10rem 15%; /* match with header and all other sections */
 }
 .home {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.home img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.aboutme {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15rem; /* gap between itmes */
     background: var(--bg-color);
 }
-.home-content {
+.aboutme-content {
     display: flex;
     flex-direction: column; /* items on top of each other */
 
@@ -179,22 +198,22 @@ section {
     align-items: flex-end;
     text-align: right;
 }
-.home-content h1 {
+.aboutme-content h1 {
     font-size: 5rem;
     font-weight: 700;
     margin-top: 1.5rem;
     line-height: 1;
 }
-.home-content h3 {
+.aboutme-content h3 {
     margin: 1rem 0; /* 1rem top/bottom, 0 sides */
     font-size: 3em;
 }
-.home-content p {
+.aboutme-content p {
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.8; /* easier readability */
 }
-.home-img img {
+.aboutme-img img {
     /*position: relative;*/
     width: 32vw; /* image size 32% of viewport width */
     border-radius: 50%;
@@ -202,7 +221,7 @@ section {
     transition: 0.4s ease-in-out;
     cursor: pointer;
 }
-.home-img img:hover {
+.aboutme-img img:hover {
     transform: scale(1.01);
     filter: drop-shadow(0 0 25px var(--main-color));
 }
@@ -344,7 +363,7 @@ span {
     color: var(--main-color);
 }
 
-.home-img {
+.aboutme-img {
     border-radius: 50%;
 }
 
