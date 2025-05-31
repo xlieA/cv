@@ -59,6 +59,15 @@ body {
     justify-content: space-between; /* items side-by-side with all available space between */
     align-items: center;
     z-index: 100;
+
+    /* hidden nav bar for home section */
+    opacity: 0;
+    pointer-events: none; /* disable interaction when hidden */
+    transition: opacity 0.2s ease-in-out;
+}
+.header.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 #menu-icon {
     font-size: 3.5rem;
