@@ -14,7 +14,7 @@
             Natalie <span>Adam</span>
         </a>
 
-        <i class="fa-solid fa-bars" id="menu-icon"></i>
+        <!-- <i class="fa-solid fa-bars" id="menu-icon"></i> -->
         <nav class="navbar">
             <a href="#home" class="active">Home</a>
             <a href="#aboutme">About Me</a>
@@ -25,6 +25,38 @@
             <!-- <i class="fa-solid fa-xmark"></i> -->
         </nav>
     </header>
+
+    <section class="mobile-navbar-class">
+        <!-- mobile version -->
+        <input id="page-nav-toggle" class="mobile-navbar-toggle" type="checkbox" />
+
+        <label for="page-nav-toggle" class="menu-toggle-label">
+        <svg class="icon--menu-toggle" viewBox="0 0 60 30">
+            <g class="icon-group">
+            <g class="icon--menu">
+                <path d="M 6 0 L 54 0" />
+                <path d="M 6 15 L 54 15" />
+                <path d="M 6 30 L 54 30" />
+            </g>
+            <g class="icon--close">
+                <path d="M 15 0 L 45 30" />
+                <path d="M 15 30 L 45 0" />
+            </g>
+            </g>
+        </svg>
+        </label>
+
+        <nav class="mobile-navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#aboutme">About Me</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#languages">Languages</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        </nav>
+    </section>
 
     <section class="home" id="home">
         <img src="assets/img/mountain_back.png" id="mountain_back">
