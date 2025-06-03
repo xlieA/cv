@@ -1,7 +1,7 @@
 // nav bar manager
 const menuIcon = document.getElementById('menu-icon');
 const mobileNavbar = document.querySelector('.mobile-navbar');
-const navLinks = document.querySelectorAll('.mobile-navbar a');
+const mNavLinks = document.querySelectorAll('.mobile-navbar a');
 
 menuIcon.addEventListener('click', () => {
     menuIcon.classList.toggle('fa-bars');
@@ -14,7 +14,7 @@ menuIcon.addEventListener('click', () => {
 });
 
 // close mobile menu when a nav link is clicked
-navLinks.forEach(link => {
+mNavLinks.forEach(link => {
     link.addEventListener('click', () => {
         mobileNavbar.classList.remove('active');
         menuIcon.classList.remove('fa-xmark');
@@ -24,6 +24,33 @@ navLinks.forEach(link => {
         document.documentElement.classList.remove('no-scroll');
         document.body.classList.remove('no-scroll');
     });
+});
+
+
+// highlight current section
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.navbar a');
+
+window.addEventListener('scroll', () => {
+  let currentSectionId = '';
+
+  sections.forEach(section => {
+    // get section position relative to viewport top
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+
+    // scrollY is past this section's top (with some offset)
+    if (window.scrollY >= sectionTop - sectionHeight / 3) {
+      currentSectionId = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('active'); // remove active class from all links
+    if (link.getAttribute('href') === `#${currentSectionId}`) {
+      link.classList.add('active'); // add active class to current section's link
+    }
+  });
 });
 
 
