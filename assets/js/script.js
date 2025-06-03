@@ -1,12 +1,29 @@
 // nav bar manager
 const menuIcon = document.getElementById('menu-icon');
 const mobileNavbar = document.querySelector('.mobile-navbar');
+const navLinks = document.querySelectorAll('.mobile-navbar a');
 
 menuIcon.addEventListener('click', () => {
     menuIcon.classList.toggle('fa-bars');
     menuIcon.classList.toggle('fa-xmark');
     menuIcon.classList.toggle('open');
     mobileNavbar.classList.toggle('active');
+
+    document.documentElement.classList.toggle('no-scroll');
+    document.body.classList.toggle('no-scroll');
+});
+
+// Close mobile menu when a nav link is clicked
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileNavbar.classList.remove('active');
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+        menuIcon.classList.remove('open');
+
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+    });
 });
 
 

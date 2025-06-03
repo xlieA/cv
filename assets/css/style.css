@@ -38,11 +38,9 @@ body {
 ::-webkit-scrollbar {
     width: 0.8rem;
 }
-
 ::-webkit-scrollbar-track {
     background: var(--bg-color);
 }
-
 ::-webkit-scrollbar-thumb {
     background: var(--main-color);
 }
