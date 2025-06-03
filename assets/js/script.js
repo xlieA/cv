@@ -13,7 +13,7 @@ menuIcon.addEventListener('click', () => {
     document.body.classList.toggle('no-scroll');
 });
 
-// Close mobile menu when a nav link is clicked
+// close mobile menu when a nav link is clicked
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         mobileNavbar.classList.remove('active');
@@ -45,7 +45,6 @@ const observer = new IntersectionObserver(
 observer.observe(home);
 
 
-
 // move home section images
 let mountain_back = document.getElementById("mountain_back");
 let mountain_moon = document.getElementById("mountain_moon");
@@ -63,3 +62,49 @@ window.addEventListener('scroll', function() {
     mountain_front.style.top = value * 0.15 + 'px';
     greeting.style.top = value * 1 + 'px';
 })
+
+
+const words = ['Game Developer', 'Software Engineer', 'Storyteller'];
+const typeSpeed = 100;   // ms per character typing
+const deleteSpeed = 50;  // ms per character deleting
+const delayBetweenWords = 1500; // pause after full word typed
+
+const element = document.getElementById('typewriter-text');
+
+let wordIndex = 0;
+let charIndex = 0;
+let typing = true;
+
+function type() {
+  const currentWord = words[wordIndex];
+  
+  if (typing) {
+    // type character
+    element.textContent = currentWord.slice(0, charIndex + 1);
+    charIndex++;
+    
+    if (charIndex === currentWord.length) {
+      // word fully typed, wait and then start deleting
+      typing = false;
+      setTimeout(type, delayBetweenWords);
+    } else {
+      setTimeout(type, typeSpeed);
+    }
+  } else {
+    // delete character
+    element.textContent = currentWord.slice(0, charIndex - 1);
+    charIndex--;
+    
+    if (charIndex === 0) {
+      // word fully deleted, move to next word
+      typing = true;
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(type, typeSpeed);
+    } else {
+      setTimeout(type, deleteSpeed);
+    }
+  }
+}
+
+// start the effect
+type();

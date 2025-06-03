@@ -263,11 +263,23 @@ section {
     transform: scale(1.2)translateY(-5px); /* chain transform effects */
     box-shadow: 0 0 25px var(--main-color);
 }
+.typewriter {
+  font-size: 34px;
+  font-weight: 600;
+  min-width: 280px;
+}
+#typewriter-text {
+  border-right: 3px solid var(--main-color); /* cursor */
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom; /* align baseline with surrounding text */
+}
+
 .btn-group {
     display: flex;
     gap: 1.5rem;
 }
-
 .btn {
     /* default button style */
     display: inline-block;
@@ -378,39 +390,7 @@ section {
 @media (max-width: 1285px) {
     #menu-icon {
         display: block; /* make icon visible */
-    }/*
-    .navbar {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 50%;
-        padding: 1rem 3rem;
-
-        background: rgba(0, 0, 0, 0.8);
-        border-left: 2px solid var(--main-color);
-        border-bottom: 2px solid var(--main-color);
-        border-top: 2px solid var(--main-color);
-        border-bottom-left-radius: 2rem;
-        border-top-left-radius: 2rem;
-
-        display: none;
     }
-    .navbar.active {
-        display: block;
-    }
-    .navbar a {
-        display: block;
-        font-size: 2rem;
-        margin: 3rem 0;
-        color: var(--text-color);
-    }
-    .navbar a:hover,
-    .navbar a.active {
-        padding: 1 rem;
-        border-radius: 0.5rem;
-        border-bottom: 0.5rem solid var(--main-color);
-        color: var(--main-color);
-    }*/
     .navbar {
         display: none;
     }
@@ -533,76 +513,3 @@ section {
         flex-direction: column;
     }
 }
-
-/*
-span {
-    color: var(--main-color);
-}
-
-.aboutme-img {
-    border-radius: 50%;
-}
-
-.typewriter {
-    font-size: 34px;
-    font-weight: 600;
-    min-width: 280px;
-}
-
-.typewriter span {
-    position: relative;
-}
-
-.typewriter span::before {
-    content: 'Game Developer';
-    color:  var(--main-color);
-    animation: words 20s infinite;
-}
-
-.typewriter span::after {
-    content: '';
-    background: var(--bg-color);
-    position: absolute;
-    width: calc(100%, 8px);
-    height: 100%;
-    border-left: 3px solid var(--bg-color);
-    right: -8;
-    animation: cursor 0.6s infinite, typing 20s steps(14) infinite;
-}
-
-@keyframes cursor {
-    to {
-        border-left: 3px solid var(--main-color);
-    }
-}
-
-@keyframes words {
-    0%, 33% {
-        content: 'Game Developer';
-    }
-    34%, 66% {
-        content: 'Software Engineer';
-    }
-
-    67%, 100% {
-        content: 'Storyteller';
-    }
-}
-
-@keyframes typing {
-    10%, 15%,
-    30%, 35%,
-    50%, 55%,
-    70%, 75%,
-    90%, 95% {
-        width: 0;
-    }
-
-    5%, 20%,
-    25%, 40%,
-    45%, 60%,
-    65%, 80%, 85% {
-        width: calc(100% + 8px);
-    }
-}
-*/
