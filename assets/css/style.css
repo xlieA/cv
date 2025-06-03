@@ -44,6 +44,9 @@ body {
 ::-webkit-scrollbar-thumb {
     background: var(--main-color);
 }
+.no-scroll {
+  overflow-y: hidden;
+}
 
 .header {
     display: flex;
