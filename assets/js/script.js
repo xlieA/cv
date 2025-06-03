@@ -133,5 +133,4 @@ function type() {
   }
 }
 
-// start the effect
 type();
