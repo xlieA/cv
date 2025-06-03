@@ -1,11 +1,14 @@
 // nav bar manager
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+const menuIcon = document.getElementById('menu-icon');
+const mobileNavbar = document.querySelector('.mobile-navbar');
 
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('fa-xmark')
-    navbar.classList.toggle('active');
-}
+menuIcon.addEventListener('click', () => {
+    menuIcon.classList.toggle('fa-bars');
+    menuIcon.classList.toggle('fa-xmark');
+    menuIcon.classList.toggle('open');
+    mobileNavbar.classList.toggle('active');
+});
+
 
 // invisible header for home section
 const header = document.querySelector('header');

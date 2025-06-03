@@ -89,42 +89,25 @@ body {
 .logo:hover {
     transform: scale(1.1);
 }
-.menu-toggle-label {
-    position: fixed;
-    top: calc(var(--space) * 1.5);
-    right: calc(var(--space) * 2);
-    cursor: pointer;
-    z-index: 2;
-    font-size: calc(1rem + 4vmin);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--size);
-    height: var(--size);
+#menu-icon {
+    font-size: 3.5rem;
     color: var(--main-color);
-    user-select: none;
+    cursor: pointer;
+    display: none;
+    z-index: 2;
 }
-
-.menu-toggle-label .icon--close {
-  display: none;
-  color: var(--text-color);
-  transition: transform var(--nav-duration) var(--ease);
+#menu-icon:hover {
+    transform: scale(1.1);
 }
-
-.mobile-navbar-toggle:checked + .menu-toggle-label .icon--menu {
-  display: none;
+#menu-icon.fa-bars {
+    color: var(--main-color);
 }
-
-.mobile-navbar-toggle:checked + .menu-toggle-label .icon--close {
-  display: inline-block;
+#menu-icon.fa-xmark.open {
+    color: var(--text-color);
 }
-.mobile-navbar-toggle {
-  position: fixed;
-  height: 1px; 
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
+#menu-icon.fa-xmark.open:hover {
+    transform: scale(1.2);
+    color: var(--second-bg-color);
 }
 
 span {
@@ -140,14 +123,6 @@ span {
 }
 .mobile-navbar {
     display: none;
-}
-.mobile-navbar-toggle {
-    position: fixed;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap;
 }
 .navbar a {
     font-size: 1.8rem;
@@ -400,9 +375,9 @@ section {
 
 /* media queries always last (overwriting) */
 @media (max-width: 1285px) {
-    /*#menu-icon {
+    #menu-icon {
         display: block; /* make icon visible */
-    /*}
+    }/*
     .navbar {
         position: absolute;
         top: 100%;
@@ -438,42 +413,6 @@ section {
     .navbar {
         display: none;
     }
-    .mobile-navbar-toggle {
-        position: fixed;
-        height: 1px; 
-        width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap;
-
-        + label {
-            position: fixed;
-            top: calc(var(--space) * 1.5);
-            right: calc(var(--space) * 2);
-            cursor: pointer;
-            z-index: 2;
-        }
-    }
-    .icon--menu-toggle {
-        --size: calc(1rem + 4vmin);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: var(--size);
-        height: var(--size);
-        stroke-width: 6;
-    }
-    .icon-group {
-        transform: translateX(0);
-        transition: transform var(--nav-duration) var(--ease);
-    }
-    .icon--menu {
-        stroke: var(--main-color);
-    }
-    .icon--close {
-        stroke: var(--text-color);
-        transform: translateX(-100%);
-    }
     .mobile-navbar {
         position: fixed;
         top: 0;
@@ -485,8 +424,8 @@ section {
         transform: translateX(-100%);
         transition: transform var(--nav-duration);
         z-index: 1;
-    
-    &:after {
+    }
+    .mobile-navbar::after {
         content: '';
         position: absolute;
         top: 0;
@@ -497,18 +436,18 @@ section {
         transform-origin: 0 50%;
         z-index: -1;
     }
-    ul {
+    .mobile-navbar ul {
         font-size: 12vmin;
         width: 100%;
     }
-    li {
+    .mobile-navbar li {
         --border-size: 1vmin;
         display: flex;
         align-items: center;
         position: relative;
         overflow: hidden;
-        
-        &:after {
+    }
+    .mobile-navbar li::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -518,9 +457,8 @@ section {
         background-color: var(--text-color);
         transform-origin: 0 50%;
         transform: translateX(-100%) skew(15deg);
-        }
     }
-    a {
+    .mobile-navbar a {
         display: inline-block;
         width: 100%;
         max-width: 800px;
@@ -532,42 +470,33 @@ section {
         padding: var(--space) calc(var(--space) * 2) calc(var(--space) + var(--border-size) / 2);
         transform: translateY(100%);
     }
+    .mobile-navbar {
+    transform: translateX(-100%);
+    transition: transform var(--nav-duration);
     }
-
-    .mobile-navbar-toggle:checked {
-    ~ label .icon--menu-toggle {    
-        .icon-group {
-        transform: translateX(100%);
-        }
-    }
-    ~ .main-content {
-        transform: translateX(10%);
-    }
-    ~ .mobile-navbar {
-        transition-duration: 0s;
+    .mobile-navbar.active {
         transform: translateX(0);
+    }
 
-        &:after {
+    .mobile-navbar.active::after {
         animation: nav-bg var(--nav-duration) var(--ease) forwards;
-        }
-        
-        li:after {
+    }
+
+    .mobile-navbar.active li::after {
         animation: nav-line var(--duration) var(--ease) forwards;
-        }
-        
-        a {
+    }
+
+    .mobile-navbar.active a {
         animation: link-appear calc(var(--duration) * 1.5) var(--ease) forwards;
-        }
-        
-        @for $i from 1 through 4 {
-        li:nth-child(#{$i}) {
-            &:after, a {
-            animation-delay: calc((var(--duration) / 2) * #{$i} * 0.125);
-            }
-        }
-        }
     }
+    .mobile-navbar a:hover,
+    .mobile-navbar a.active {
+        padding: 1 rem;
+        border-radius: 0.5rem;
+        border-bottom: 0.5rem solid var(--second-bg-color);
+        color: var(--second-bg-color);
     }
+
     @keyframes nav-bg {
     from { transform: translateX(-100%) skewX(-15deg) }
     to { transform: translateX(0) }
