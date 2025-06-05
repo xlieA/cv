@@ -91,6 +91,7 @@ window.addEventListener('scroll', function() {
 })
 
 
+// typewriter effect
 const words = ['Game Developer', 'Software Engineer', 'Storyteller'];
 const typeSpeed = 100;   // ms per character typing
 const deleteSpeed = 50;  // ms per character deleting
