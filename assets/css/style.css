@@ -129,7 +129,7 @@ span {
     font-size: 1.8rem;
     color: var(--text-color);
     margin-left: 4rem; /* space between items */
-    font-weight: 500;
+    font-weight: 800;
     transition: 0.3s ease-in-out;
 
     /* underline effect */
@@ -337,6 +337,11 @@ section {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     align-items: center;
     gap: 2.5rem;
+    row-gap: 3.5rem;
+}
+.experience-article {
+    position: relative;
+    overflow: hidden;
 }
 .experience-box {
     display: flex;
@@ -364,6 +369,88 @@ section {
 }
 .experience-info i {
     font-size: 8rem;
+}
+.experience-info a {
+    color: var(--bg-color);
+}
+.experience-info a:hover {
+    color: var(--text-color);
+}
+.experience-data {
+    width: 350px;
+    background-color: var(--second-bg-color);
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 24px hsla(0, 0%, 0%, .15);
+    border-radius: 3rem;
+    position: absolute;
+    bottom: -9rem;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    opacity: 0;
+    transition: opacity 1s 1s;
+}
+.experience-description {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: .25rem;
+}
+.experience-text {
+    color: var(--text-color);
+}
+.experience-title {
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: .75rem;
+}
+.experience-article:hover .experience-data {
+    animation: show-data 1s forwards;
+    opacity: 1;
+    transition: opacity .3s;
+}
+.experience-article:hover {
+    animation: remove-overflow 2s forwards;
+}
+.experience-article:not(:hover) {
+    animation: show-overflow 2s forwards;
+}
+.experience-article:not(:hover) .experience-data {
+    animation: remove-data 1s forwards;
+}
+/* card animation */
+@keyframes show-data {
+    50% {
+        transform: translateY(-10rem);
+    }
+    100% {
+        transform: translateY(-7rem);
+    }
+}
+@keyframes remove-overflow {
+    to {
+        overflow: initial;
+    }
+}
+@keyframes remove-data {
+    0% {
+        transform: translateY(-7rem);
+    }
+    50% {
+        transform: translateY(-10rem);
+    }
+    100% {
+        transform: translateY(.5rem);
+    }
+}
+@keyframes show-overflow {
+    0% {
+        overflow: initial;
+        pointer-events: none;
+    }
+    50% {
+        overflow: hidden;
+    }
 }
 
 .contact {
