@@ -58,7 +58,7 @@ window.addEventListener('scroll', () => {
 const header = document.querySelector('header');
 const home = document.querySelector('.home');
 
-const observer = new IntersectionObserver(
+const observerHeader = new IntersectionObserver(
   ([entry]) => {
     if (entry.isIntersecting) {
       header.classList.remove('visible');
@@ -69,7 +69,7 @@ const observer = new IntersectionObserver(
   { threshold: 0.1 }
 );
 
-observer.observe(home);
+observerHeader.observe(home);
 
 
 // move home section images
@@ -135,3 +135,35 @@ function type() {
 }
 
 type();
+
+
+// skill bar animation
+const observerSkills = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        spans.forEach((span, index) => {
+            const percentage = percentages[index];
+            if (entry.isIntersecting) {
+                span.classList.add('animate');
+                percentage.classList.add('animate');
+            } else {
+                span.classList.remove('animate');
+                percentage.classList.remove('animate');
+            }
+        });
+    });
+});
+
+const skillContainer = document.querySelector('.skills-container');
+const spans = document.querySelectorAll('.bar span');
+const percentages = document.querySelectorAll('.percentage');
+observerSkills.observe(skillContainer);
+
+function updatePercentagePositions() {
+    const barWidth = document.querySelector('.bar').clientWidth;
+    percentages.forEach(percentage => {
+        const widthPercentage = parseFloat(percentage.textContent) / 100;
+        percentage.style.left = `${barWidth * widthPercentage - 12.5}px`;
+    });
+}
+
+updatePercentagePositions();
