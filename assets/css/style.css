@@ -107,7 +107,7 @@ body {
     color: var(--text-color);
 }
 #menu-icon.fa-xmark.open:hover {
-    transform: scale(1.2);
+    transform: scale(1.5);
     color: var(--second-bg-color);
 }
 
@@ -601,6 +601,7 @@ section {
     }
     .mobile-navbar a:hover,
     .mobile-navbar a.active {
+        transform: scale(1.1);
         padding: 1 rem;
         border-radius: 0.5rem;
         border-bottom: 0.5rem solid var(--second-bg-color);
