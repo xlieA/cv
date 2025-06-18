@@ -35,6 +35,10 @@ body {
     color: var(--text-color);
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 ::-webkit-scrollbar {
     width: 0.8rem;
 }
@@ -335,10 +339,10 @@ section {
 }
 .experience-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     align-items: center;
     gap: 2.5rem;
-    row-gap: 3.5rem;
+    row-gap: 7.5rem;
 }
 .experience-article {
     position: relative;
@@ -842,10 +846,10 @@ section {
 
 
 
-img {
+.ag-timeline-card_img-box img {
   max-width: 100%;
 }
-p {
+.ag-timeline-card_desc p {
   margin-bottom: 1em;
 }
 video {
