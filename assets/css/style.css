@@ -460,6 +460,13 @@ section {
     }
 }
 
+.projects {
+    background-color: var(--bg-color);
+}
+.projects  h2 {
+    color: var(--text-color);
+}
+
 .skills {
     background-color: var(--bg-color);   
 }
@@ -1138,7 +1145,6 @@ video {
     width: auto;
   }
 }
-
 @media only screen and (max-width: 639px) {
   .ag-timeline_title {
     font-size: 60px;
@@ -1151,21 +1157,16 @@ video {
     font-size: 14px;
   }
 }
-
 @media only screen and (max-width: 479px) {
 
 }
-
 @media (min-width: 768px) and (max-width: 979px) {
   .ag-format-container {
     width: 750px;
   }
-
 }
-
 @media (min-width: 980px) and (max-width: 1161px) {
   .ag-format-container {
     width: 960px;
   }
-
 }
