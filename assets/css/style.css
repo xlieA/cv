@@ -387,10 +387,12 @@ section {
     padding: 1.5rem 2rem;
     box-shadow: 0 8px 24px hsla(0, 0%, 0%, .15);
     border-radius: 3rem;
+
     position: absolute;
     bottom: -11rem;
     left: 0;
     right: 0;
+    
     margin-inline: auto;
     opacity: 0;
     transition: opacity 1s 1s;
@@ -429,7 +431,7 @@ section {
         transform: translateY(-10rem);
     }
     100% {
-        transform: translateY(-7rem);
+        transform: translateY(-6.5rem);
     }
 }
 @keyframes remove-overflow {
@@ -439,7 +441,7 @@ section {
 }
 @keyframes remove-data {
     0% {
-        transform: translateY(-7rem);
+        transform: translateY(-6.5rem);
     }
     50% {
         transform: translateY(-10rem);
