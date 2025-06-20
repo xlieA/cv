@@ -685,6 +685,7 @@ section {
     text-align: left;
 }
 
+
 .skills {
     background-color: var(--bg-color);   
 }
@@ -744,26 +745,28 @@ section {
 }
 
 /* adding animation to skill bar */
-.html.animate,
-.css.animate {
+.ps.animate,
+.office.animate {
     width: 90%;
-    animation: html_css 3s;
+    animation: ninety 3s;
 }
-.javascript.animate {
+.unity.animate,
+.java.animate,
+.git.animate {
     width:80%;
-    animation: javascript 3s;
+    animation: eighty 3s;
 }
-.react.animate {
+.c.animate {
     width:70%;
-    animation: react 3s;
+    animation: seventy 3s;
 }
 
-.node.animate {
-    width:50%;
-    animation: node 3s;
+.blender.animate {
+    width:30%;
+    animation: thirdty 3s;
 }
 
-@keyframes html_css {
+@keyframes ninety {
     0% {
         width:0%
     };
@@ -771,7 +774,7 @@ section {
         width:90%
     }
 }
-@keyframes javascript {
+@keyframes eighty {
     0% {
         width:0%
     };
@@ -779,7 +782,7 @@ section {
         width:80%
     }
 }
-@keyframes react {
+@keyframes seventy {
     0% {
         width:0%
     };
@@ -787,16 +790,16 @@ section {
         width:70%
     }
 }
-@keyframes node {
+@keyframes thirdty {
     0% {
         width:0%
     };
     100% {
-        width:50%
+        width:30%
     }
 }
 
- .percentage {
+.percentage {
     content: "";
     position: absolute;
     top:12px;
@@ -825,25 +828,27 @@ section {
 }
 
 /* adding animation to .percentage */
-.html-percentage.animate,
-.css-percentage.animate {
+.ps-percentage.animate,
+.office-percentage.animate {
     left:90%;
-    animation: html_css_percentage 3s;
+    animation: ninety_css_percentage 3s;
 }
-.javascript-percentage.animate {
+.unity-percentage.animate,
+.java-percentage.animate,
+.git-percentage.animate {
     left:80%;
-    animation: javascript_percentage 3s;
+    animation: eighty_percentage 3s;
 }
-.react-percentage.animate {
+.c-percentage.animate {
     left:70%;
-    animation: react_percentage 3s;
+    animation: seventy_percentage 3s;
 }
-.node-percentage.animate {
-    left:70%;
-    animation: react_percentage 3s;
+.blender-percentage.animate {
+    left:30%;
+    animation: thridty_percentage 3s;
 }
 
-@keyframes html_css_percentage {
+@keyframes ninety_css_percentage {
     0% {
         left:0
     };
@@ -851,7 +856,7 @@ section {
         left:90%;
     }
 }
-@keyframes javascript_percentage {
+@keyframes eighty_percentage {
     0% {
         left:0
     };
@@ -859,7 +864,7 @@ section {
         left:80%;
     }
 }
-@keyframes react_percentage {
+@keyframes seventy_percentage {
     0% {
         left:0
     };
@@ -867,12 +872,12 @@ section {
         left:70%;
     }
 }
-@keyframes node_percentage {
+@keyframes thirdty_percentage {
     0% {
         left:0
     };
     100% {
-        left:50%;
+        left:30%;
     }
 }
 
