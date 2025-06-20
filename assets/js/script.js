@@ -168,13 +168,9 @@ function updatePercentagePositions() {
 
 updatePercentagePositions();
 
-
-
-
+// timeline animation
 (function ($) {
   $(function () {
-
-
     $(window).on('scroll', function () {
       fnOnScroll();
     });
@@ -182,7 +178,6 @@ updatePercentagePositions();
     $(window).on('resize', function () {
       fnOnResize();
     });
-
 
     var agTimeline = $('.js-timeline'),
       agTimelineLine = $('.js-timeline_line'),
