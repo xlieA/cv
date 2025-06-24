@@ -718,29 +718,36 @@ section {
 .skill-container {
     width:100%;
     margin:10px 0;
-    padding: 0px 0;
+    padding: 10px 0;
     position:relative;
 }
-.skill-container p {
-    margin: 5px;
-    font-family: "Poppins", sans-serif;
+.skill-label-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* space between label and bar */
+}
+.skill-label-bar p {
+    min-width: 80px; /* Adjust to your content */
+    margin: 0;
+    text-align: right;
     font-size: 16px;
 }
+.bar-wrapper {
+    position: relative;
+    flex: 1;
+}
 .bar {
-    width:100%;
-    background: #475472;
-    display:block;
+    width: 100%;
     height: 20px;
-    border:none;
+    background: #475472;
     border-radius: 100vw;
     overflow: hidden;
-    transition: all .3s cubic-bezier(.25, 8, .25, 1);
- }
+    position: relative;
+}
 .bar span {
-    height:20px;
-    float: left;
+    display: block;
+    height: 100%;
     background: var(--main-color);
-    border:none;
     border-radius: 100vw;
 }
 
@@ -760,7 +767,6 @@ section {
     width:70%;
     animation: seventy 3s;
 }
-
 .blender.animate {
     width:30%;
     animation: thirdty 3s;
@@ -802,7 +808,7 @@ section {
 .percentage {
     content: "";
     position: absolute;
-    top:12px;
+    top:-28px;
     width:25px;
     height:20px;
     background: var(--main-color);
@@ -845,7 +851,7 @@ section {
 }
 .blender-percentage.animate {
     left:30%;
-    animation: thridty_percentage 3s;
+    animation: thirdty_percentage 3s;
 }
 
 @keyframes ninety_css_percentage {

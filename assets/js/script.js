@@ -168,6 +168,7 @@ function updatePercentagePositions() {
 
 updatePercentagePositions();
 
+
 // timeline animation
 (function ($) {
   $(function () {
