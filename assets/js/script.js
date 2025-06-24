@@ -139,34 +139,38 @@ type();
 
 // skill bar animation
 const observerSkills = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        spans.forEach((span, index) => {
-            const percentage = percentages[index];
-            if (entry.isIntersecting) {
-                span.classList.add('animate');
-                percentage.classList.add('animate');
-            } else {
-                span.classList.remove('animate');
-                percentage.classList.remove('animate');
-            }
-        });
-    });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const spans = entry.target.querySelectorAll('.bar span');
+      const percentages = entry.target.querySelectorAll('.percentage');
+      spans.forEach(span => span.classList.add('animate'));
+      percentages.forEach(perc => perc.classList.add('animate'));
+    }
+  });
 });
 
-const skillContainer = document.querySelector('.skills-container');
-const spans = document.querySelectorAll('.bar span');
-const percentages = document.querySelectorAll('.percentage');
-observerSkills.observe(skillContainer);
+// observe each skill container
+document.querySelectorAll('.skill-container').forEach(container => {
+  observerSkills.observe(container);
 
-function updatePercentagePositions() {
-    const barWidth = document.querySelector('.bar').clientWidth;
-    percentages.forEach(percentage => {
-        const widthPercentage = parseFloat(percentage.textContent) / 100;
-        percentage.style.left = `${barWidth * widthPercentage - 12.5}px`;
-    });
-}
+  container.addEventListener('mouseenter', () => {
+    const span = container.querySelector('.bar span');
+    const percentage = container.querySelector('.percentage');
 
-updatePercentagePositions();
+    // remove and re-trigger animation
+    span.classList.remove('animate');
+    percentage.classList.remove('animate');
+
+    // force reflow
+    void span.offsetWidth;
+    void percentage.offsetWidth;
+
+    // add again
+    span.classList.add('animate');
+    percentage.classList.add('animate');
+  });
+});
+
 
 
 // timeline animation
