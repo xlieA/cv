@@ -732,6 +732,21 @@ section {
     text-align: right;
     font-size: 16px;
 }
+.skill-label-bar i {
+    font-size: 25px;
+    min-width: 80px;
+    text-align: right;
+    color: var(--text-color);
+}
+.skill-label-bar .icon-wrapper {
+    min-width: 80px;
+    text-align: right;
+}
+.skill-label-bar svg {
+    width: 25px;
+    height: 25px;
+    fill: var(--text-color);
+}
 .bar-wrapper {
     position: relative;
     flex: 1;
