@@ -135,42 +135,6 @@ function type() {
 type();
 
 
-// skill bar animation
-const observerSkills = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const spans = entry.target.querySelectorAll('.bar span');
-      const percentages = entry.target.querySelectorAll('.percentage');
-      spans.forEach(span => span.classList.add('animate'));
-      percentages.forEach(perc => perc.classList.add('animate'));
-    }
-  });
-});
-
-// observe each skill container
-document.querySelectorAll('.skill-container').forEach(container => {
-  observerSkills.observe(container);
-
-  container.addEventListener('mouseenter', () => {
-    const span = container.querySelector('.bar span');
-    const percentage = container.querySelector('.percentage');
-
-    // remove and re-trigger animation
-    span.classList.remove('animate');
-    percentage.classList.remove('animate');
-
-    // force reflow
-    void span.offsetWidth;
-    void percentage.offsetWidth;
-
-    // add again
-    span.classList.add('animate');
-    percentage.classList.add('animate');
-  });
-});
-
-
-
 // timeline animation
 (function ($) {
   $(function () {
@@ -242,3 +206,104 @@ document.querySelectorAll('.skill-container').forEach(container => {
 })
 
 (jQuery);
+
+
+// skill bar animation
+const observerSkills = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const spans = entry.target.querySelectorAll('.bar span');
+      const percentages = entry.target.querySelectorAll('.percentage');
+      spans.forEach(span => span.classList.add('animate'));
+      percentages.forEach(perc => perc.classList.add('animate'));
+    }
+  });
+});
+
+// observe each skill container
+document.querySelectorAll('.skill-container').forEach(container => {
+  observerSkills.observe(container);
+
+  container.addEventListener('mouseenter', () => {
+    const span = container.querySelector('.bar span');
+    const percentage = container.querySelector('.percentage');
+
+    // remove and re-trigger animation
+    span.classList.remove('animate');
+    percentage.classList.remove('animate');
+
+    // force reflow
+    void span.offsetWidth;
+    void percentage.offsetWidth;
+
+    // add again
+    span.classList.add('animate');
+    percentage.classList.add('animate');
+  });
+});
+
+
+// language skills handling
+const circularSkills = document.querySelectorAll('.circular-skill');
+
+function createDots(container, percentage) {
+  const svg = container.querySelector('svg');
+  svg.innerHTML = ''; // Clear any existing dots
+
+  const totalDots = 30;
+  const activeDots = Math.round(totalDots * (percentage / 100));
+  const radius = 50;
+  const center = 60;
+
+  for (let i = 0; i < totalDots; i++) {
+    const angle = (i / totalDots) * (2 * Math.PI);
+    const x = center + radius * Math.cos(angle);
+    const y = center + radius * Math.sin(angle);
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', x);
+    circle.setAttribute('cy', y);
+    circle.setAttribute('r', 3);
+    circle.setAttribute('fill', i < activeDots ? 'var(--main-color)' : '#ccc');
+    circle.setAttribute('opacity', '0');
+    circle.style.transition = `opacity 0.3s ease ${i * 0.02}s`;
+
+    svg.appendChild(circle);
+  }
+}
+
+function animateDots(container) {
+  const circles = container.querySelectorAll('circle');
+  circles.forEach(c => c.style.opacity = '1');
+}
+
+function resetDots(container) {
+  const circles = container.querySelectorAll('circle');
+  circles.forEach(c => c.style.opacity = '0');
+}
+
+// Intersection Observer logic
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const container = entry.target;
+    if (entry.isIntersecting) {
+      const percentage = parseInt(container.dataset.percentage, 10);
+      createDots(container, percentage);
+      animateDots(container);
+    } else {
+      resetDots(container);
+    }
+  });
+}, { threshold: 0.6 });
+
+circularSkills.forEach(skill => {
+  observer.observe(skill);
+
+  // Hover logic to re-trigger animation
+  skill.addEventListener('mouseenter', () => {
+    resetDots(skill);
+    setTimeout(() => {
+      animateDots(skill);
+    }, 10);
+  });
+});
