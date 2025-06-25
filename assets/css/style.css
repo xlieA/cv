@@ -701,9 +701,15 @@ section {
     transform: scale(1.01);
     filter: drop-shadow(0 0 25px var(--main-color));
 }
+.skills-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
 .skills-container {
     max-width: 100%;
-    width:100%; 
+    width: 50%; 
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -852,20 +858,24 @@ section {
 .ps-percentage.animate,
 .office-percentage.animate {
     left:90%;
+    transform: translateX(-50%);
     animation: ninety_css_percentage 3s;
 }
 .unity-percentage.animate,
 .java-percentage.animate,
 .git-percentage.animate {
     left:80%;
+    transform: translateX(-50%);
     animation: eighty_percentage 3s;
 }
 .c-percentage.animate {
     left:70%;
+    transform: translateX(-50%);
     animation: seventy_percentage 3s;
 }
 .blender-percentage.animate {
     left:30%;
+    transform: translateX(-50%);
     animation: thirdty_percentage 3s;
 }
 
@@ -1087,6 +1097,18 @@ section {
     }
     .aboutme .aboutme-img img {
         width: 56vw;
+    }
+
+    .skills .skills-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .skills .skills-img img {
+        max-width: 56vw;
+    }
+    .skills .skills-container {
+        width: 100%;
     }
 
     .contact form {
