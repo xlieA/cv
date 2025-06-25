@@ -35,20 +35,18 @@ window.addEventListener('scroll', () => {
   let currentSectionId = '';
 
   sections.forEach(section => {
-    // get section position relative to viewport top
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
+    const rect = section.getBoundingClientRect();
+    const offset = window.innerHeight / 2; // Middle of screen
 
-    // scrollY is past this section's top (with some offset)
-    if (window.scrollY >= sectionTop - sectionHeight / 3) {
+    if (rect.top <= offset && rect.bottom >= offset) {
       currentSectionId = section.getAttribute('id');
     }
   });
 
   navLinks.forEach(link => {
-    link.classList.remove('active'); // remove active class from all links
+    link.classList.remove('active');
     if (link.getAttribute('href') === `#${currentSectionId}`) {
-      link.classList.add('active'); // add active class to current section's link
+      link.classList.add('active');
     }
   });
 });
