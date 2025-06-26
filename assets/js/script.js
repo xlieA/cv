@@ -242,68 +242,50 @@ document.querySelectorAll('.skill-container').forEach(container => {
   });
 });
 
-
-// language skills handling
+// handling circle skills
 const circularSkills = document.querySelectorAll('.circular-skill');
 
-function createDots(container, percentage) {
-  const svg = container.querySelector('svg');
-  svg.innerHTML = ''; // Clear any existing dots
-
-  const totalDots = 30;
-  const activeDots = Math.round(totalDots * (percentage / 100));
-  const radius = 50;
-  const center = 60;
-
-  for (let i = 0; i < totalDots; i++) {
-    const angle = (i / totalDots) * (2 * Math.PI);
-    const x = center + radius * Math.cos(angle);
-    const y = center + radius * Math.sin(angle);
-
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', x);
-    circle.setAttribute('cy', y);
-    circle.setAttribute('r', 3);
-    circle.setAttribute('fill', i < activeDots ? 'var(--main-color)' : '#ccc');
-    circle.setAttribute('opacity', '0');
-    circle.style.transition = `opacity 0.3s ease ${i * 0.02}s`;
-
-    svg.appendChild(circle);
-  }
-}
-
-function animateDots(container) {
-  const circles = container.querySelectorAll('circle');
-  circles.forEach(c => c.style.opacity = '1');
-}
-
-function resetDots(container) {
-  const circles = container.querySelectorAll('circle');
-  circles.forEach(c => c.style.opacity = '0');
-}
-
-// Intersection Observer logic
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    const container = entry.target;
+    const el = entry.target;
+    const circle = el.querySelector('.progress');
+    const percentage = el.getAttribute('data-percentage');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+
+    circle.style.strokeDasharray = `${circumference}`;
+    circle.style.strokeDashoffset = `${circumference}`;
+
     if (entry.isIntersecting) {
-      const percentage = parseInt(container.dataset.percentage, 10);
-      createDots(container, percentage);
-      animateDots(container);
+      const offset = circumference - (percentage / 100) * circumference;
+      // animate in view
+      setTimeout(() => {
+        circle.style.strokeDashoffset = offset;
+      }, 50);
     } else {
-      resetDots(container);
+      circle.style.strokeDashoffset = circumference;
     }
   });
-}, { threshold: 0.6 });
+}, { threshold: 0.5 });
 
 circularSkills.forEach(skill => {
   observer.observe(skill);
 
-  // Hover logic to re-trigger animation
   skill.addEventListener('mouseenter', () => {
-    resetDots(skill);
-    setTimeout(() => {
-      animateDots(skill);
-    }, 10);
+    const circle = skill.querySelector('.progress');
+    const percentage = skill.getAttribute('data-percentage');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+
+    circle.style.transition = 'none';
+    circle.style.strokeDashoffset = circumference;
+
+    // Force reflow
+    void circle.offsetWidth;
+
+    circle.style.transition = 'stroke-dashoffset 2s ease';
+    const offset = circumference - (percentage / 100) * circumference;
+    circle.style.strokeDashoffset = offset;
   });
 });
+

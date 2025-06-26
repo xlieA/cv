@@ -917,39 +917,64 @@ section {
     margin: 2rem 0;
     font-weight: 800;
 }
-.circular-skill {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 20px;
+.circular-skills-wrapper {
+  display: flex;
+  justify-content: center;
 }
-.language-icon-wrapper {
+.circular-skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+.circular-skill {
+  width: clamp(80px, 20vw, 150px);
+  height: clamp(80px, 20vw, 150px);
+  position: relative;
+}
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.progress-ring circle {
+  fill: none;
+  stroke-width: 12;
+  r: 54;
+  cx: 60;
+  cy: 60;
+}
+.bg {
+  stroke: #475472;
+}
+.progress {
+  stroke: var(--main-color, --grad-color);
+  stroke-linecap: round;
+  stroke-dasharray: 339.292;
+  stroke-dashoffset: 339.292;
+  transition: stroke-dashoffset 2s ease;
+}
+.flag-circle {
+  width: 50%;
+  height: 50%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: transparent;
-}
-.flag-circle {
-  width: 60px;
-  height: 60px;
   border-radius: 50%;
   overflow: hidden;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .flag-circle svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
-
 
 .contact {
     background-color: var(--bg-color);
@@ -1219,5 +1244,10 @@ section {
     }
     .ag-timeline-card_desc {
         font-size: 14px;
+    }
+
+    .circular-skills-container {
+        flex-direction: column;
+        align-items: center;
     }
 }
