@@ -1175,6 +1175,10 @@ section {
         width: 100%;
     }
 
+    .languages-content h4 {
+        text-align: center;
+    }
+
     .contact form {
         flex-direction: column;
     }
