@@ -211,29 +211,13 @@ type();
 // skill bar animation
 const observerSkills = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    const container = entry.target;
-    const span = container.querySelector('.bar span');
-    const percentage = container.querySelector('.percentage');
-
     if (entry.isIntersecting) {
-      // remove and re-add class to restart animation
-      span.classList.remove('animate');
-      percentage.classList.remove('animate');
-
-      // force reflow
-      void span.offsetWidth;
-      void percentage.offsetWidth;
-
-      // re-add animation
-      span.classList.add('animate');
-      percentage.classList.add('animate');
+      const spans = entry.target.querySelectorAll('.bar span');
+      const percentages = entry.target.querySelectorAll('.percentage');
+      spans.forEach(span => span.classList.add('animate'));
+      percentages.forEach(perc => perc.classList.add('animate'));
     }
   });
-}, { threshold: 0.5 });
-
-// apply to all skill containers
-document.querySelectorAll('.skill-container').forEach(container => {
-  observerSkills.observe(container);
 });
 
 // observe each skill container
@@ -258,6 +242,8 @@ document.querySelectorAll('.skill-container').forEach(container => {
   });
 });
 
+
+// language skills handling
 // handling circle skills
 const circularSkills = document.querySelectorAll('.circular-skill');
 
@@ -304,4 +290,3 @@ circularSkills.forEach(skill => {
     circle.style.strokeDashoffset = offset;
   });
 });
-
