@@ -301,4 +301,18 @@ document.querySelectorAll('.circular-skill').forEach(elem => {
 });
 
 
+// scroll effect for skills image
+gasp.registerPlugin(ScrollTrigger);
 
+gsap.to('.zoom-image', {
+  scale: 1.5,                // adjust zoom factor
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.skills-img',
+    start: 'top bottom',     // when container top enters viewport bottom
+    end: 'bottom top',       // when container bottom leaves viewport top
+    scrub: true,             // scrubbing syncs animation to scroll position
+    pin: true,               // optional: keeps container in fixed position
+    markers: true            // for debugging
+  }
+});
