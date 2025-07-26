@@ -15,6 +15,7 @@
     --text-color: #fff;
     --main-color: #7b4bb7;
     --grad-color: #aa507c;
+    --bg-bar: #475472;
 
     --duration: 1s;
     --nav-duration: calc(var(--duration) / 4);
@@ -118,8 +119,8 @@ a:hover {
 span {
     background: linear-gradient(
         270deg,
-        #7b4bb7 10%,
-        #aa507c 100%
+        var(--main-color) 10%,
+        var(--grad-color) 100%
     );
 
     /* put gradient inside text */
@@ -760,7 +761,7 @@ section {
 .bar {
     width: 100%;
     height: 20px;
-    background: #475472;
+    background: var(--bg-bar);
     border-radius: 100vw;
     overflow: hidden;
     position: relative;
@@ -913,7 +914,7 @@ section {
 }
 
 .languages-content h4 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 2rem 0;
     font-weight: 800;
 }
@@ -930,32 +931,33 @@ section {
   max-width: 1000px;
   margin: auto;
 }
-.circular-skill {
-  width: clamp(80px, 20vw, 150px);
-  height: clamp(80px, 20vw, 150px);
-  position: relative;
+.circular-skill-box
+{
+    position: relative;
+    margin: 50px;
 }
-.progress-ring {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
+.circular-skill
+{
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.progress-ring circle {
-  fill: none;
-  stroke-width: 12;
-  r: 54;
-  cx: 60;
-  cy: 60;
+.circular-skill .points {
+  width: 20px;            /* make it thicker */
+  height: 20px;           /* same as width for a circle */
+  background: var(--bg-bar);
+  position: absolute;
+  border-radius: 50%;    /* makes it perfectly round */
+  transform: rotate(calc(var(--i)*var(--rot))) translateY(-100px);
+  /* optionally add a border or shadow to make them pop */
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
-.bg {
-  stroke: #475472;
-}
-.progress {
-  stroke: var(--main-color, --grad-color);
-  stroke-linecap: round;
-  stroke-dasharray: 339.292;
-  stroke-dashoffset: 339.292;
-  transition: stroke-dashoffset 2s ease;
+.points.marked
+{
+    animation: glow 0.04s linear forwards;
+    animation-delay: calc(var(--i)*0.05s);
 }
 .flag-circle {
   width: 50%;
@@ -974,6 +976,17 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+@keyframes glow
+{
+    0%
+    {
+        background: #0007;
+    }
+    100%
+    {
+        background: var(--bgColor);
+    }
 }
 
 .contact {

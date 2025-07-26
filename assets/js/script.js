@@ -243,50 +243,62 @@ document.querySelectorAll('.skill-container').forEach(container => {
 });
 
 
-// language skills handling
 // handling circle skills
-const circularSkills = document.querySelectorAll('.circular-skill');
+const dots = 20;  // fixed dots count for all circles
+const circles = document.querySelectorAll('.circular-skill');
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const el = entry.target;
-    const circle = el.querySelector('.progress');
-    const percentage = el.getAttribute('data-percentage');
-    const radius = circle.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
+circles.forEach(elem => {
+  const marked = elem.getAttribute('data-percent') || 0;
+  const percent = Math.floor(dots * marked / 100);
+  const rotate = 360 / dots;
+  let points = '';
+  for (let i = 0; i < dots; i++) {
+    points += `<div class="points" style="--i: ${i}; --rot: ${rotate}deg"></div>`;
+  }
+  elem.innerHTML = points;
+  const pointsMarked = elem.querySelectorAll('.points');
+  for (let i = 0; i < percent; i++) {
+    pointsMarked[i].classList.add('marked');
+  }
+});
 
-    circle.style.strokeDasharray = `${circumference}`;
-    circle.style.strokeDashoffset = `${circumference}`;
+document.querySelectorAll('.circular-skill').forEach(elem => {
+  let animating = false;
+  const animationDuration = 0.04 * 20 + 0.1; // seconds, approx total animation delay + duration
+  
+  function animateDots() {
+    if (animating) return; // prevent re-trigger while animating
 
-    if (entry.isIntersecting) {
-      const offset = circumference - (percentage / 100) * circumference;
-      // animate in view
-      setTimeout(() => {
-        circle.style.strokeDashoffset = offset;
-      }, 50);
-    } else {
-      circle.style.strokeDashoffset = circumference;
-    }
-  });
-}, { threshold: 0.5 });
+    animating = true;
+    const pointsMarked = elem.querySelectorAll('.points.marked');
+    pointsMarked.forEach(point => {
+      point.classList.remove('marked');
+      void point.offsetWidth; // force reflow
+      point.classList.add('marked');
+    });
 
-circularSkills.forEach(skill => {
-  observer.observe(skill);
+    // reset
+    setTimeout(() => {
+      animating = false;
+    }, animationDuration * 1000);
+  }
 
-  skill.addEventListener('mouseenter', () => {
-    const circle = skill.querySelector('.progress');
-    const percentage = skill.getAttribute('data-percentage');
-    const radius = circle.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
+  // intersection
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateDots();
+      }
+    });
+  }, { threshold: 0.5 });
 
-    circle.style.transition = 'none';
-    circle.style.strokeDashoffset = circumference;
+  observer.observe(elem);
 
-    // Force reflow
-    void circle.offsetWidth;
-
-    circle.style.transition = 'stroke-dashoffset 2s ease';
-    const offset = circumference - (percentage / 100) * circumference;
-    circle.style.strokeDashoffset = offset;
+  // hover
+  elem.addEventListener('mouseenter', () => {
+    animateDots();
   });
 });
+
+
+
