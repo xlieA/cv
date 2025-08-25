@@ -211,14 +211,31 @@ type();
 // skill bar animation
 const observerSkills = new IntersectionObserver(entries => {
   entries.forEach(entry => {
+    const spans = entry.target.querySelectorAll('.bar span');
+    const percentages = entry.target.querySelectorAll('.percentage');
+
     if (entry.isIntersecting) {
-      const spans = entry.target.querySelectorAll('.bar span');
-      const percentages = entry.target.querySelectorAll('.percentage');
-      spans.forEach(span => span.classList.add('animate'));
-      percentages.forEach(perc => perc.classList.add('animate'));
+      // remove & re-add to restart animation every time
+      spans.forEach(span => {
+        span.classList.remove('animate');
+        void span.offsetWidth; // force reflow
+        span.classList.add('animate');
+      });
+
+      percentages.forEach(perc => {
+        perc.classList.remove('animate');
+        void perc.offsetWidth; // force reflow
+        perc.classList.add('animate');
+      });
+
+    } else {
+      // clean up when leaving viewport (optional, but ensures fresh restart)
+      spans.forEach(span => span.classList.remove('animate'));
+      percentages.forEach(perc => perc.classList.remove('animate'));
     }
   });
-});
+}, { threshold: 0.5 });
+
 
 // observe each skill container
 document.querySelectorAll('.skill-container').forEach(container => {
