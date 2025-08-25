@@ -209,55 +209,71 @@ type();
 
 
 // skill bar animation
-const observerSkills = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const spans = entry.target.querySelectorAll('.bar span');
-    const percentages = entry.target.querySelectorAll('.percentage');
+const containers = document.querySelectorAll('.skill-container');
 
-    if (entry.isIntersecting) {
-      // remove & re-add to restart animation every time
-      spans.forEach(span => {
-        span.classList.remove('animate');
-        void span.offsetWidth; // force reflow
-        span.classList.add('animate');
-      });
+  function restartBar(container) {
+    // prevent re-trigger while animating
+    if (container.dataset.animating === '1') return;
+    container.dataset.animating = '1';
 
-      percentages.forEach(perc => {
-        perc.classList.remove('animate');
-        void perc.offsetWidth; // force reflow
-        perc.classList.add('animate');
-      });
-
-    } else {
-      // clean up when leaving viewport (optional, but ensures fresh restart)
-      spans.forEach(span => span.classList.remove('animate'));
-      percentages.forEach(perc => perc.classList.remove('animate'));
-    }
-  });
-}, { threshold: 0.5 });
-
-
-// observe each skill container
-document.querySelectorAll('.skill-container').forEach(container => {
-  observerSkills.observe(container);
-
-  container.addEventListener('mouseenter', () => {
     const span = container.querySelector('.bar span');
     const percentage = container.querySelector('.percentage');
 
-    // remove and re-trigger animation
+    // remove & force reflow to restart
     span.classList.remove('animate');
     percentage.classList.remove('animate');
-
-    // force reflow
-    void span.offsetWidth;
+    void span.offsetWidth;      // reflow
     void percentage.offsetWidth;
 
-    // add again
+    // add back to start animation
     span.classList.add('animate');
     percentage.classList.add('animate');
+
+    // wait for BOTH to finish before allowing another restart
+    let ended = 0;
+    const onEnd = () => {
+      ended += 1;
+      if (ended >= 2) {
+        container.dataset.animating = '0';
+        span.removeEventListener('animationend', onEnd);
+        percentage.removeEventListener('animationend', onEnd);
+      }
+    };
+    span.addEventListener('animationend', onEnd);
+    percentage.addEventListener('animationend', onEnd);
+
+    // safety unlock in case animationend doesn't fire
+    setTimeout(() => {
+      if (container.dataset.animating === '1') {
+        container.dataset.animating = '0';
+        span.removeEventListener('animationend', onEnd);
+        percentage.removeEventListener('animationend', onEnd);
+      }
+    }, 4000); // > your CSS animation duration
+  }
+
+  // Re-animate when it comes into view (but only after previous finished)
+  const observerSkills = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        restartBar(entry.target);
+      } else {
+        // optional: reset so it starts from zero next time
+        const span = entry.target.querySelector('.bar span');
+        const percentage = entry.target.querySelector('.percentage');
+        span.classList.remove('animate');
+        percentage.classList.remove('animate');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  containers.forEach(container => {
+    observerSkills.observe(container);
+
+    // Re-animate on hover, but only if not already running
+    container.addEventListener('mouseenter', () => restartBar(container));
   });
-});
+
 
 
 // handling circle skills
