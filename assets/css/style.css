@@ -585,6 +585,12 @@ section {
     font-size: 28px;
     color: var(--main-color);
 }
+.ag-timeline-card_meta a {
+    color: var(--main-color);
+}
+.ag-timeline-card_meta a:hover {
+    color: var(--text-color);
+}
 .ag-timeline-card_item {
     display: inline-block;
     width: 45%;
@@ -673,6 +679,12 @@ section {
     font-weight: bold;
     font-size: 28px;
     color: var(--main-color);
+}
+.ag-timeline-card_title a {
+    color:var(--main-color);
+}
+.ag-timeline-card_title a:hover {
+    color:var(--text-color);
 }
 .ag-timeline-card_desc {
     line-height: 1.45;
