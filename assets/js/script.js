@@ -249,10 +249,10 @@ const containers = document.querySelectorAll('.skill-container');
         span.removeEventListener('animationend', onEnd);
         percentage.removeEventListener('animationend', onEnd);
       }
-    }, 4000); // > your CSS animation duration
+    }, 4000); // animation duration
   }
 
-  // Re-animate when it comes into view (but only after previous finished)
+  // re-animate when it comes into view (but only after previous finished)
   const observerSkills = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -270,10 +270,9 @@ const containers = document.querySelectorAll('.skill-container');
   containers.forEach(container => {
     observerSkills.observe(container);
 
-    // Re-animate on hover, but only if not already running
+    // re-animate on hover, but only if not already running
     container.addEventListener('mouseenter', () => restartBar(container));
   });
-
 
 
 // handling circle skills
@@ -285,10 +284,14 @@ circles.forEach(elem => {
   const percent = Math.floor(dots * marked / 100);
   const rotate = 360 / dots;
   let points = '';
+
   for (let i = 0; i < dots; i++) {
-    points += `<div class="points" style="--i: ${i}; --rot: ${rotate}deg"></div>`;
+    points += `<div class="points" style="--i:${i}; --rot:${rotate}deg"></div>`;
   }
+
   elem.innerHTML = points;
+
+  // apply permanent marked state
   const pointsMarked = elem.querySelectorAll('.points');
   for (let i = 0; i < percent; i++) {
     pointsMarked[i].classList.add('marked');
@@ -297,40 +300,35 @@ circles.forEach(elem => {
 
 document.querySelectorAll('.circular-skill').forEach(elem => {
   let animating = false;
-  const animationDuration = 0.04 * 20 + 0.1; // seconds, approx total animation delay + duration
-  
-  function animateDots() {
-    if (animating) return; // prevent re-trigger while animating
+  const animationDuration = 0.04 * 20 + 0.1; // match delay * dots + extra
 
+  function animateDots() {
+    if (animating) return;
     animating = true;
+
     const pointsMarked = elem.querySelectorAll('.points.marked');
-    pointsMarked.forEach(point => {
-      point.classList.remove('marked');
+
+    pointsMarked.forEach((point, idx) => {
+      point.classList.remove('animate');
       void point.offsetWidth; // force reflow
-      point.classList.add('marked');
+      point.style.setProperty('--delay', `${idx * 0.04}s`); // per-dot delay
+      point.classList.add('animate');
     });
 
-    // reset
-    setTimeout(() => {
-      animating = false;
-    }, animationDuration * 1000);
+    setTimeout(() => { animating = false; }, animationDuration * 1000);
   }
 
-  // intersection
+  // intersection observer
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateDots();
-      }
+      if (entry.isIntersecting) animateDots();
     });
   }, { threshold: 0.5 });
 
   observer.observe(elem);
 
   // hover
-  elem.addEventListener('mouseenter', () => {
-    animateDots();
-  });
+  elem.addEventListener('mouseenter', animateDots);
 });
 
 
