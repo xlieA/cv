@@ -705,36 +705,38 @@ section {
 .skills-img {
     width: 32vw; /* image size 32% of viewport width */
     height: 32vw;
-    border-radius: 50%;
+    border-radius: 20%;
     box-shadow: 0 0 25px var(--main-color);
-    transition: 0.4s ease-in-out;
-    cursor: pointer;
     overflow: hidden;
     position: relative;
+    transition: 0.4s ease-in-out;
+    cursor: pointer;
+
+    display: flex;             /* center child content */
+    align-items: center;       /* vertical center */
+    justify-content: center;   /* horizontal center */
 }
 .skills-img:hover {
     transform: scale(1.01);
     filter: drop-shadow(0 0 25px var(--main-color));
 }
 .zoom-image{
-    width: 100%;
+    position: absolute;
+    width: 50%;
+    max-width: 200%;
     height: 100%;
+
     object-fit: cover;
-    transform-origin: center center;
+    object-position: top center;  /* crop from the top middle */
+    transform-origin: top center; /* zoom towards the top */
+
+    transition: opacity 0.3s ease;
+    opacity: 0; /* start hidden */
 }
-/*
-.skills-img img {
-    /*position: relative;*/
-    /*width: 32vw; /* image size 32% of viewport width */
-    /*border-radius: 50%;
-    box-shadow: 0 0 25px var(--main-color);
-    transition: 0.4s ease-in-out;
-    cursor: pointer;
+.zoom-image.active {
+    opacity: 1; /* only active one is visible */
+    z-index: 1;
 }
-.skills-img img:hover {
-    transform: scale(1.01);
-    filter: drop-shadow(0 0 25px var(--main-color));
-}*/
 .skills-content {
     display: flex;
     align-items: center;
@@ -823,7 +825,12 @@ section {
     width:70%;
     animation: seventy 3s;
 }
-.blender.animate {
+.sql.animate {
+    width:50%;
+    animation: fifty 3s;
+}
+.blender.animate,
+.haskell.animate {
     width:30%;
     animation: thirdty 3s;
 }
@@ -850,6 +857,14 @@ section {
     };
     100% {
         width:70%
+    }
+}
+@keyframes fifty {
+    0% {
+        width:0%
+    };
+    100% {
+        width:50%
     }
 }
 @keyframes thirdty {
@@ -895,7 +910,7 @@ section {
 .office-percentage.animate {
     left:90%;
     transform: translateX(-50%);
-    animation: ninety_css_percentage 3s;
+    animation: ninety_percentage 3s;
 }
 .unity-percentage.animate,
 .java-percentage.animate,
@@ -909,13 +924,19 @@ section {
     transform: translateX(-50%);
     animation: seventy_percentage 3s;
 }
-.blender-percentage.animate {
+.sql-percentage.animate {
+    left:50%;
+    transform: translateX(-50%);
+    animation: fifty_percentage 3s;
+}
+.blender-percentage.animate,
+.haskell-percentage.animate {
     left:30%;
     transform: translateX(-50%);
     animation: thirdty_percentage 3s;
 }
 
-@keyframes ninety_css_percentage {
+@keyframes ninety_percentage {
     0% {
         left:0
     };
@@ -937,6 +958,14 @@ section {
     };
     100% {
         left:70%;
+    }
+}
+@keyframes fifty_percentage {
+    0% {
+        left:0
+    };
+    100% {
+        left:50%;
     }
 }
 @keyframes thirdty_percentage {

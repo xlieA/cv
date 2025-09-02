@@ -333,17 +333,35 @@ document.querySelectorAll('.circular-skill').forEach(elem => {
 
 
 // scroll effect for skills image
-gasp.registerPlugin(ScrollTrigger);
+$(window).on("scroll", function() {
+  var scrollTop = $(window).scrollTop();
 
-gsap.to('.zoom-image', {
-  scale: 1.5,                // adjust zoom factor
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.skills-img',
-    start: 'top bottom',     // when container top enters viewport bottom
-    end: 'bottom top',       // when container bottom leaves viewport top
-    scrub: true,             // scrubbing syncs animation to scroll position
-    pin: true,               // optional: keeps container in fixed position
-    markers: true            // for debugging
-  }
+  $(".skills-img").each(function() {
+    let $container = $(this);
+    let containerTop = $container.offset().top;
+    let windowHeight = $(window).height();
+    let progress = (scrollTop + windowHeight/2 - containerTop) / windowHeight;
+
+    // clamp between 0 and 1
+    progress = Math.max(0, Math.min(1, progress));
+
+    // zoom (applied to all images equally)
+    let scale = 1 + 0.9 * progress;
+    $container.find(".zoom-image").css("transform", "scale(" + scale + ")");
+
+    // image switching with custom thresholds
+    let $images = $container.find(".zoom-image");
+    $images.removeClass("active");
+
+    if (progress < 0.05) {
+      $images.eq(0).addClass("active");  // top image
+    } else if (progress < 0.3) {
+      $images.eq(1).addClass("active");  // middle image
+    } else {
+      $images.eq(2).addClass("active");  // bottom image
+    }
+  });
 });
+
+
+
