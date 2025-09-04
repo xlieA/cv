@@ -364,4 +364,83 @@ $(window).on("scroll", function() {
 });
 
 
+// avatar following cusor
+//const avatar = document.getElementById("avatar-follower");
+const avatar = document.createElement("div");
 
+let avatarPosX = 0, avatarPosY = 0;
+let mousePosX = 0, mousePosY = 0;
+
+let frameCount = 0;
+const numberOfFrames = 4;   // number of frames per animation
+const frameWidth = 128;     // width of each frame
+const frameHeight = 128;    // height of each frame (row spacing in spritesheet)
+const avatarSpeed = 10;
+
+ function init() {
+  avatar.id = "oneko";
+  avatar.ariaHidden = true;
+  avatar.style.width = "32px";
+  avatar.style.height = "32px";
+  avatar.style.position = "fixed";
+  avatar.style.pointerEvents = "none";
+  avatar.style.imageRendering = "pixelated";
+  avatar.style.left = `${nekoPosX - 16}px`;
+  avatar.style.top = `${nekoPosY - 16}px`;
+  avatar.style.zIndex = 2147483647;
+
+  let avatarFile = "assets/img/avatar_sp.png"
+
+  avatar.style.backgroundImage = `url(${avatarFile})`;
+
+  document.body.appendChild(avatar);
+
+  document.addEventListener("mousemove", function (event) {
+    mousePosX = event.clientX;
+    mousePosY = event.clientY;
+  });
+
+  window.requestAnimationFrame(frame);
+}
+
+function idle() {
+  setSprite(2, 0);
+}
+
+function setSprite(row, frame) {
+  avatar.style.backgroundPosition = `-${frame * frameWidth}px -${row * frameHeight}px`;
+}
+
+function frame() {
+  frameCount += 1;
+  const diffX = avatarPosX - mousePosX;
+  const diffY = avatarPosY - mousePosY;
+  const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
+
+  if (distance < avatarSpeed || distance < 48) {
+    idle();
+    return;
+  }
+
+  let row;
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    row = diffX > 0 ? 0 : 1; // 0 = right, 1 = left
+  } else {
+    row = diffY > 0 ? 2 : 2; // 2 = down, 2 = up
+  }
+
+  // animate frame
+  const currentFrame = frameCount % numberOfFrames;
+  setSprite(row, currentFrame);
+
+  avatarPosX -= (diffX / distance) * avatarSpeed;
+  avatarPosY -= (diffY / distance) * avatarSpeed;
+
+  avatarPosX = Math.min(Math.max(frameWidth/2, avatarPosX), window.innerWidth - frameWidth/2);
+  avatarPosY = Math.min(Math.max(frameHeight/2, avatarPosY), window.innerHeight - frameHeight/2);
+
+  avatar.style.left = `${avatarPosX - frameWidth/2}px`;
+  avatar.style.top = `${avatarPosY - frameHeight/2}px`;
+
+  window.requestAnimationFrame(frame);
+} init();
