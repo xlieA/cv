@@ -204,17 +204,6 @@ section {
     z-index: 2;
 }
 
-#avatar-follower {
-  position: fixed;
-  width: 128px; /* frame width */
-  height: 128px; /* frame height */
-  pointer-events: none;
-  z-index: 2147483647;
-  background-image: url("assets/img/avatar_sp.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 .aboutme {
     display: flex;
     justify-content: center;

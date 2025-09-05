@@ -365,82 +365,162 @@ $(window).on("scroll", function() {
 
 
 // avatar following cusor
-//const avatar = document.getElementById("avatar-follower");
-const avatar = document.createElement("div");
+// https://github.com/adryd325/oneko.js
+(function oneko() {
+  const isReducedMotion =
+    window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
+    window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
 
-let avatarPosX = 0, avatarPosY = 0;
-let mousePosX = 0, mousePosY = 0;
+  if (isReducedMotion) return;
 
-let frameCount = 0;
-const numberOfFrames = 4;   // number of frames per animation
-const frameWidth = 128;     // width of each frame
-const frameHeight = 128;    // height of each frame (row spacing in spritesheet)
-const avatarSpeed = 10;
+  const avatar = document.createElement("div");
 
- function init() {
-  avatar.id = "oneko";
-  avatar.ariaHidden = true;
-  avatar.style.width = "32px";
-  avatar.style.height = "32px";
-  avatar.style.position = "fixed";
-  avatar.style.pointerEvents = "none";
-  avatar.style.imageRendering = "pixelated";
-  avatar.style.left = `${nekoPosX - 16}px`;
-  avatar.style.top = `${nekoPosY - 16}px`;
-  avatar.style.zIndex = 2147483647;
+  let avatarPosX = 64;
+  let avatarPosY = 64;
+  let avatarWidth = 64;
+  let avatarHeight = 64;
 
-  let avatarFile = "assets/img/avatar_sp.png"
+  let mousePosX = 0;
+  let mousePosY = 0;
 
-  avatar.style.backgroundImage = `url(${avatarFile})`;
+  let frameCount = 0;
+  let idleTime = 0;
+  let idleAnimation = null;
+  let idleAnimationFrame = 0;
 
-  document.body.appendChild(avatar);
+  const avatarSpeed = 10;
+  const spriteSets = {
+    idle: [[0, -2]],
+    alert: [[0, -2]],
+    N: [
+      [0, -2],
+      [-1, -2],
+      [-2, -2],
+      [-3, -2],
+    ],
+    E: [
+      [0, 0],
+      [-1, 0],
+      [-2, 0],
+      [-3, 0],
+    ],
+    S: [
+      [0, -2],
+      [-1, -2],
+      [-2, -2],
+      [-3, -2],
+    ],
+    W: [
+      [0, -1],
+      [-1, -1],
+      [-2, -1],
+      [-3, -1],
+    ]
+  };
 
-  document.addEventListener("mousemove", function (event) {
-    mousePosX = event.clientX;
-    mousePosY = event.clientY;
-  });
+  function init() {
+    avatar.id = "avatar";
+    avatar.ariaHidden = true;
+    avatar.style.width = `${avatarWidth}px`;
+    avatar.style.height = `${avatarHeight}px`;
+    avatar.style.position = "fixed";
+    avatar.style.pointerEvents = "none";
+    avatar.style.imageRendering = "pixelated";
+    avatar.style.left = `${avatarPosX - avatarWidth/2}px`;
+    avatar.style.top = `${avatarPosY - avatarHeight/2}px`;
+    avatar.style.zIndex = 2147483647;
 
-  window.requestAnimationFrame(frame);
-}
+    let avatarFile = "./assets/img/avatar_sp_s.gif"
+    const curScript = document.currentScript
+    if (curScript && curScript.dataset.cat) {
+      avatarFile = curScript.dataset.cat
+    }
+    avatar.style.backgroundImage = `url(${avatarFile})`;
 
-function idle() {
-  setSprite(2, 0);
-}
+    document.body.appendChild(avatar);
 
-function setSprite(row, frame) {
-  avatar.style.backgroundPosition = `-${frame * frameWidth}px -${row * frameHeight}px`;
-}
+    document.addEventListener("mousemove", function (event) {
+      mousePosX = event.clientX;
+      mousePosY = event.clientY;
+    });
 
-function frame() {
-  frameCount += 1;
-  const diffX = avatarPosX - mousePosX;
-  const diffY = avatarPosY - mousePosY;
-  const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
-
-  if (distance < avatarSpeed || distance < 48) {
-    idle();
-    return;
+    window.requestAnimationFrame(onAnimationFrame);
   }
 
-  let row;
-  if (Math.abs(diffX) > Math.abs(diffY)) {
-    row = diffX > 0 ? 0 : 1; // 0 = right, 1 = left
-  } else {
-    row = diffY > 0 ? 2 : 2; // 2 = down, 2 = up
+  let lastFrameTimestamp;
+
+  function onAnimationFrame(timestamp) {
+    // Stops execution if the neko element is removed from DOM
+    if (!avatar.isConnected) {
+      return;
+    }
+    if (!lastFrameTimestamp) {
+      lastFrameTimestamp = timestamp;
+    }
+    if (timestamp - lastFrameTimestamp > 100) {
+      lastFrameTimestamp = timestamp
+      frame()
+    }
+    window.requestAnimationFrame(onAnimationFrame);
   }
 
-  // animate frame
-  const currentFrame = frameCount % numberOfFrames;
-  setSprite(row, currentFrame);
+  function setSprite(name, frame) {
+    const sprite = spriteSets[name][frame % spriteSets[name].length];
+    avatar.style.backgroundPosition = `${sprite[0] * avatarWidth}px ${sprite[1] * avatarHeight}px`;
+  }
 
-  avatarPosX -= (diffX / distance) * avatarSpeed;
-  avatarPosY -= (diffY / distance) * avatarSpeed;
+  function resetIdleAnimation() {
+    idleAnimation = null;
+    idleAnimationFrame = 0;
+  }
 
-  avatarPosX = Math.min(Math.max(frameWidth/2, avatarPosX), window.innerWidth - frameWidth/2);
-  avatarPosY = Math.min(Math.max(frameHeight/2, avatarPosY), window.innerHeight - frameHeight/2);
+  function idle() {
+    idleTime += 1;
+    setSprite("idle", 0);
+    idleAnimationFrame += 1;
+  }
 
-  avatar.style.left = `${avatarPosX - frameWidth/2}px`;
-  avatar.style.top = `${avatarPosY - frameHeight/2}px`;
+  function frame() {
+    frameCount += 1;
+    const diffX = avatarPosX - mousePosX;
+    const diffY = avatarPosY - mousePosY;
+    const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-  window.requestAnimationFrame(frame);
-} init();
+    if (distance < avatarSpeed || distance < 48) {
+      idle();
+      return;
+    }
+
+    idleAnimation = null;
+    idleAnimationFrame = 0;
+
+    if (idleTime > 1) {
+      setSprite("alert", 0);
+      // count down after being alerted before moving
+      idleTime = Math.min(idleTime, 7);
+      idleTime -= 1;
+      return;
+    }
+
+    let direction;
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      direction = diffX > 0 ? "W" : "E"; // left or right
+    } else {
+      direction = diffY > 0 ? "N" : "S"; // up or down
+    }
+
+    setSprite(direction, frameCount);
+
+
+    avatarPosX -= (diffX / distance) * avatarSpeed;
+    avatarPosY -= (diffY / distance) * avatarSpeed;
+
+    avatarPosX = Math.min(Math.max(avatarWidth/2, avatarPosX), window.innerWidth - avatarWidth/2);
+    avatarPosY = Math.min(Math.max(avatarHeight/2, avatarPosY), window.innerHeight - avatarHeight/2);
+
+    avatar.style.left = `${avatarPosX - avatarHeight/2}px`;
+    avatar.style.top = `${avatarPosY - avatarWidth/2}px`;
+  }
+
+  init();
+})();
