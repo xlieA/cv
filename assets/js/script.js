@@ -517,6 +517,12 @@ $(window).on("scroll", function() {
 
     avatarPosX = Math.min(Math.max(avatarWidth/2, avatarPosX), window.innerWidth - avatarWidth/2);
     avatarPosY = Math.min(Math.max(avatarHeight/2, avatarPosY), window.innerHeight - avatarHeight/2);
+    /*avatarPosY = Math.max(headerHeight + avatarHeight/2, avatarPosY);
+
+    if (avatarPosY == headerHeight + avatarHeight/2) {
+      idle();
+      return;
+    }*/
 
     avatar.style.left = `${avatarPosX - avatarHeight/2}px`;
     avatar.style.top = `${avatarPosY - avatarWidth/2}px`;
@@ -524,3 +530,19 @@ $(window).on("scroll", function() {
 
   init();
 })();
+
+// no avatar on home section
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      avatar.style.display = "none";  // hide when home is in view
+    } else {
+      avatar.style.display = "block"; // show otherwise
+    }
+  });
+}, { threshold: 0.1 });
+
+if (home) observer.observe(home);
+
+// no avatar on header
+const headerHeight = document.querySelector('header').offsetHeight;
