@@ -233,6 +233,7 @@ section {
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.8; /* easier readability */
+    margin-bottom: 1rem;
 }
 .aboutme-img img {
     /*position: relative;*/
@@ -589,7 +590,7 @@ section {
     color: var(--main-color);
 }
 .ag-timeline-card_meta a:hover {
-    color: var(--text-color);
+    color: var(--grad-color);
 }
 .ag-timeline-card_item {
     display: inline-block;
@@ -684,7 +685,7 @@ section {
     color:var(--main-color);
 }
 .ag-timeline-card_title a:hover {
-    color:var(--text-color);
+    color:var(--grad-color);
 }
 .ag-timeline-card_desc {
     line-height: 1.45;
