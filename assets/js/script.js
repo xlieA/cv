@@ -375,8 +375,8 @@ $(window).on("scroll", function() {
 
   const avatar = document.createElement("div");
 
-  let avatarPosX = 64;
-  let avatarPosY = 64;
+  let avatarPosX = 180;
+  let avatarPosY = 180;
   let avatarWidth = 64;
   let avatarHeight = 64;
 
@@ -450,7 +450,7 @@ $(window).on("scroll", function() {
   let lastFrameTimestamp;
 
   function onAnimationFrame(timestamp) {
-    // Stops execution if the neko element is removed from DOM
+    // stops execution if the neko element is removed from DOM
     if (!avatar.isConnected) {
       return;
     }
@@ -478,6 +478,8 @@ $(window).on("scroll", function() {
     idleTime += 1;
     setSprite("idle", 0);
     idleAnimationFrame += 1;
+
+    applyForce();
   }
 
   function frame() {
@@ -486,7 +488,9 @@ $(window).on("scroll", function() {
     const diffY = avatarPosY - mousePosY;
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-    if (distance < avatarSpeed || distance < 48) {
+    if (distance < avatarSpeed || distance < 48 || 
+      // no walking over header
+      (avatarPosY == headerHeight + avatarHeight/2 && mousePosY < headerHeight)) {
       idle();
       return;
     }
@@ -515,34 +519,96 @@ $(window).on("scroll", function() {
     avatarPosX -= (diffX / distance) * avatarSpeed;
     avatarPosY -= (diffY / distance) * avatarSpeed;
 
+    applyForce();
+  }
+
+  // apply scroll influence
+  function applyForce(isIdle) {
+    avatarPosY -= scrollVelocity * 0.02;  // tune multiplier for sensitivity
+    scrollVelocity *= 0.9; // decay towards 0 smoothly
+
     avatarPosX = Math.min(Math.max(avatarWidth/2, avatarPosX), window.innerWidth - avatarWidth/2);
-    avatarPosY = Math.min(Math.max(avatarHeight/2, avatarPosY), window.innerHeight - avatarHeight/2);
-    /*avatarPosY = Math.max(headerHeight + avatarHeight/2, avatarPosY);
 
-    if (avatarPosY == headerHeight + avatarHeight/2) {
-      idle();
-      return;
-    }*/
+      if (isScrolling) {
+        // scrolling → no header wall
+        const top = avatarPosY - avatarHeight / 2;
+        const bottom = avatarPosY + avatarHeight / 2;
 
-    avatar.style.left = `${avatarPosX - avatarHeight/2}px`;
-    avatar.style.top = `${avatarPosY - avatarWidth/2}px`;
+        if (bottom < 0 || top > window.innerHeight || top < headerHeight) {
+          avatar.style.display = "none";
+        } else {
+          if (!hideAvatar) {
+            avatar.style.display = "block";
+          }
+        }
+      } else {
+        // not scrolling → header acts as wall
+        avatarPosY = Math.min(Math.max(headerHeight + avatarHeight/2, avatarPosY), window.innerHeight - avatarHeight/2);
+        if (!hideAvatar) {
+          avatar.style.display = "block";
+        }
+      }
+
+    avatar.style.left = `${avatarPosX - avatarWidth/2}px`;
+    avatar.style.top = `${avatarPosY - avatarHeight/2}px`;
   }
 
   init();
 })();
 
-// no avatar on home section
-const observer = new IntersectionObserver((entries) => {
+// detect scrolling
+let lastScrollY = window.scrollY;
+let lastTimestamp = performance.now();
+
+let scrollVelocity = 0;
+
+window.addEventListener("scroll", () => {
+  const now = performance.now();
+  const deltaT = (now - lastTimestamp) / 1000; // seconds
+  const deltaY = window.scrollY - lastScrollY;
+
+  scrollVelocity = deltaY / deltaT; // pixels per second
+
+  lastScrollY = window.scrollY;
+  lastTimestamp = now;
+});
+
+let isScrolling = false;
+let scrollTimeout;
+
+window.addEventListener("scroll", () => {
+  isScrolling = true;
+
+  // reset timer every time the user scrolls
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    isScrolling = false;
+  }, 150); // 150ms after last scroll event → no longer scrolling
+});
+
+
+let hideAvatar = false;
+const hiddenSections = new Set();
+
+const observerAvatar = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      avatar.style.display = "none";  // hide when home is in view
+      hiddenSections.add(entry.target);
     } else {
-      avatar.style.display = "block"; // show otherwise
+      hiddenSections.delete(entry.target);
     }
   });
+
+  // hide if any section is in the set
+  hideAvatar = hiddenSections.size > 0;
+  avatar.style.display = hideAvatar ? "none" : "block";
 }, { threshold: 0.1 });
 
-if (home) observer.observe(home);
+// no avatar on home section
+if (home) observerAvatar.observe(home);
+
+// no avatar on mobile header
+if (mobileNavbar) observerAvatar.observe(mobileNavbar);
 
 // no avatar on header
 const headerHeight = document.querySelector('header').offsetHeight;
