@@ -58,7 +58,7 @@
 
             <div class="social-links">
                 <a href="https://github.com/xlieA" target="_blank"><i class="fa-brands fa-github"></i></a>
-                <a><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/in/natalie-adam-331749384" target="_blank"><i class="fab fa-linkedin"></i></a>
             </div>
 
             <div class="btn-group">
@@ -549,40 +549,37 @@
     <section class="contact" id="contact">
         <h2 class="heading">Contact <span>Me</span></h2>
 
-        <form action="#">
+        <form method="POST" action="https://formsubmit.co/52444bb7467867732123562aaacd041a">
             <div class="input-group">
 
                 <div class="input-box">
-                    <input type="text"
-                    placeholder="Full Name">
-                    <input type="email"
-                    placeholder="Email">
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email" required>
                 </div>
 
                 <div class="input-box">
-                    <input type="number"
-                    placeholder="Phone Number">
-                    <input type="text"
-                    placeholder="Subject">
+                <input type="tel" name="phone" placeholder="Phone Number">
+                <input type="text" name="subject" placeholder="Subject">
                 </div>
 
             </div>
 
             <div class="input-group-2">
-                <textarea name="" id=""
-                placeholder="Your Message"
-                cols="30" rows="10"></textarea>
-                <input type="submit"
-                value="Send Message"
-                class="btn">
+                <textarea name="message" placeholder="Your Message" cols="30" rows="10" required></textarea>
+                <input type="submit" value="Send Message" class="btn">
             </div>
+
+            <!-- Optional hidden fields -->
+            <input type="hidden" name="_subject" value="New message from portfolio: {subject}">
+            <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html"> -->
+            <input type="hidden" name="_captcha" value="false">
         </form>
     </section>
 
     <footer class="footer">
         <div class="social-links">
             <a href="https://github.com/xlieA" target="_blank"><i class="fa-brands fa-github"></i></a>
-            <a><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.linkedin.com/in/natalie-adam-331749384" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
 
         <ul class="list">
