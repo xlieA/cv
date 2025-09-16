@@ -153,7 +153,7 @@ section {
     padding: 10rem 15%; /* match with header and all other sections */
 }
 h2 {
-  font-size: clamp(1.2rem, 5vw, 2.5rem);
+  font-size: clamp(1.0rem, 5vw, 2.5rem);
 }
 .home {
     position: relative;
@@ -1329,7 +1329,7 @@ h2 {
 /* smartphone/tablet */
 @media (max-width: 768px) {
     .experience-data {
-        bottom: -3rem;        /* sits inside the box */
+        bottom: -4rem;        /* sits inside the box */
         opacity: 1 !important;
         transition: none !important;
         animation: none !important;
