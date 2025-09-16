@@ -152,6 +152,9 @@ section {
     min-height: 100vh; /* cover entire page */
     padding: 10rem 15%; /* match with header and all other sections */
 }
+h2 {
+  font-size: clamp(1.2rem, 5vw, 2.5rem);
+}
 .home {
     position: relative;
     width: 100%;
@@ -1320,6 +1323,36 @@ section {
     }
     .ag-timeline-card_arrow {
         margin-top: 12px;
+    }
+}
+
+/* smartphone/tablet */
+@media (max-width: 768px) {
+    .experience-data {
+        bottom: -3rem;        /* sits inside the box */
+        opacity: 1 !important;
+        transition: none !important;
+        animation: none !important;
+    }
+    .experience-article {
+        animation: none !important;
+        overflow: visible !important;
+    }
+    .experience-article .experience-data {
+        opacity: 1 !important;
+        animation: none !important;
+        transition: none !important;
+    }
+    /* disable hover rules */
+    .experience-article:hover,
+    .experience-article:not(:hover),
+    .experience-article:hover .experience-data,
+    .experience-article:not(:hover) .experience-data {
+        animation: none !important;
+    }
+
+    #avatar {
+        display: none !important;
     }
 }
 

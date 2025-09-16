@@ -371,7 +371,8 @@ $(window).on("scroll", function() {
     window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
     window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
 
-  if (isReducedMotion) return;
+  // deactivate for tablet/smartphones
+  if (isReducedMotion || window.innerWidth <= 768) return;
 
   const avatar = document.createElement("div");
 
